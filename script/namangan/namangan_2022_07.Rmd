@@ -31,7 +31,6 @@ namangan_input_02 <- namangan_input_01 %>%
   mutate_if(is.character, as_factor) %>% 
   distinct(phone_number, .keep_all = TRUE) %>% 
   drop_na(district) %>% 
-  mutate(district = recode(district, "Бухоро вилояти" = "Бухоро"))
 ```
 
 ```{r}
