@@ -1,7 +1,7 @@
 
 #Table 1 
 
-fergana_input_02 %>%
+tash_obl_input_02 %>%
   tabyl(district, q_1) %>%
   adorn_percentages() %>% 
   select(district, "Ёмонлашади", "Ўзгармайди", "Яхшиланади") %>% 
@@ -12,10 +12,10 @@ fergana_input_02 %>%
              subtitle = md("(*Респондентларнинг жавоблари*)")) %>% 
   my_theme_gt() %>% 
   cols_width(everything() ~ px(180)) %>% 
-  gtsave('1_savol.png', path = here("results", "tables", "fergana"))
+  gtsave('1_savol.png', path = here("results", "tables", "tash_obl"))
 
 #table 3
-fergana_input_02 %>%
+tash_obl_input_02 %>%
   tabyl(district, q_3) %>%
   adorn_percentages() %>% 
   select(district, "Қисқаради", "Ўзгармайди", "Кўпаяди") %>% 
@@ -26,10 +26,10 @@ fergana_input_02 %>%
              subtitle = md("*(Респондентларнинг жавоблари)*")) %>% 
   my_theme_gt() %>% 
   cols_width(everything() ~ px(180)) %>% 
-  gtsave('3_savol.png', path = here("results", "tables", "fergana"))
+  gtsave('3_savol.png', path = here("results", "tables", "tash_obl"))
 
 #table 5
-fergana_input_02 %>%
+tash_obl_input_02 %>%
   tabyl(district, q_5) %>%
   adorn_percentages() %>% 
   select(district, "Камаяди", "Ўзгармайди", "Кўпаяди") %>% 
@@ -40,10 +40,10 @@ fergana_input_02 %>%
              subtitle = md("*(Респондентларнинг жавоблари)*")) %>% 
   my_theme_gt() %>% 
   cols_width(everything() ~ px(180)) %>% 
-  gtsave('5_savol.png', path = here("results", "tables", "fergana"))
+  gtsave('5_savol.png', path = here("results", "tables", "tash_obl"))
 
 #table 2
-fergana_input_02 %>%
+tash_obl_input_02 %>%
   tabyl(district, q_2) %>%
   adorn_percentages() %>% 
   select(district, "Пасайди", "Ўзгармади", "Ошди") %>% 
@@ -54,10 +54,10 @@ fergana_input_02 %>%
              subtitle = md("*(Респондентларнинг жавоблари)*")) %>% 
   my_theme_gt() %>% 
   cols_width(everything() ~ px(180)) %>% 
-  gtsave('2_savol.png', path = here("results", "tables", "fergana"))
+  gtsave('2_savol.png', path = here("results", "tables", "tash_obl"))
 
 #table 4
-fergana_input_02 %>%
+tash_obl_input_02 %>%
   tabyl(district, q_4) %>%
   adorn_percentages() %>% 
   select(district, "Камайди", "Ўзгармади", "Кўпайди") %>% 
@@ -68,11 +68,11 @@ fergana_input_02 %>%
              subtitle = md("*(Респондентларнинг жавоблари)*")) %>% 
   my_theme_gt() %>% 
   cols_width(everything() ~ px(180)) %>% 
-  gtsave('4_savol.png', path = here("results", "tables", "fergana"))
+  gtsave('4_savol.png', path = here("results", "tables", "tash_obl"))
 
 
 #table 6
-fergana_input_02 %>%
+tash_obl_input_02 %>%
   tabyl(district, q_6) %>%
   adorn_percentages() %>% 
   select(district, "Қулай фурсат эмас" = "Йўқ", "Билмайман",   "Қулай фурсат" = "Ҳа") %>% 
@@ -83,11 +83,11 @@ fergana_input_02 %>%
              subtitle = md("*(Респондентларнинг жавоблари)*")) %>% 
   my_theme_gt() %>% 
   cols_width(everything() ~ px(180)) %>% 
-  gtsave('6_savol.png', path = here("results", "tables", "fergana"))
+  gtsave('6_savol.png', path = here("results", "tables", "tash_obl"))
 
 #table 7
 
-# table_7 <- fergana_input_02 %>% add_count(district) %>% 
+# table_7 <- tash_obl_input_02 %>% add_count(district) %>% 
 #   separate_rows(q_7, sep = ",") %>%
 #   mutate(q_7 = str_trim(q_7)) %>% 
 #   count(district, n,  q_7) %>% 
@@ -95,13 +95,13 @@ fergana_input_02 %>%
 #   select(-n, -nn) %>% 
 #   pivot_wider(names_from = q_7, values_from = freq) 
 # 
-# write_xlsx(table_7, "muammolar_fergana.xlsx")
+# write_xlsx(table_7, "muammolar_tash_obl.xlsx")
 
 #table 8
 
 #table 11 mahalliy organlarni baholash 
 
-fergana_input_02 %>%
+tash_obl_input_02 %>%
   tabyl(district, q_11) %>%
   adorn_percentages() %>% 
   select(district, "Жуда ёмон", "Ёмон", "Ўртача", "Яхши", "Жуда яхши") %>% 
@@ -112,12 +112,12 @@ fergana_input_02 %>%
              subtitle = md("(*Респондентларнинг жавоблари)*")) %>% 
   cols_width(everything() ~ px(120)) %>% 
   my_theme_gt() %>% 
-  gtsave('mahalliy_organ.png', path = here("results", "tables", "fergana"))
+  gtsave('mahalliy_organ.png', path = here("results", "tables", "tash_obl"))
 
 
 #table 8 hokim yordamchisi
 
-fergana_input_02 %>%
+tash_obl_input_02 %>%
   tabyl(district, q_8) %>%
   adorn_percentages() %>%
   select(district, "Танимайман",  
@@ -135,11 +135,11 @@ fergana_input_02 %>%
              subtitle = md("(*Респондентларнинг жавоблари)*")) %>%
   cols_width(everything() ~ px(120)) %>%
   my_theme_gt() %>%
-  gtsave('hokim_yordamchisi.png', path = here("results", "tables", "fergana"))
+  gtsave('hokim_yordamchisi.png', path = here("results", "tables", "tash_obl"))
 
 #table 9 yoshlar yetakchisi faoli
 
-fergana_input_02 %>%
+tash_obl_input_02 %>%
   filter(age <= "30") %>% 
   tabyl(district, q_9) %>%
   adorn_percentages() %>%
@@ -154,12 +154,12 @@ fergana_input_02 %>%
              subtitle = md("(*Респондентларнинг жавоблари)*")) %>%
   cols_width(everything() ~ px(120)) %>%
   my_theme_gt() %>%
-  gtsave('yoshlar_yetakchisi.png', path = here("results", "tables", "fergana"))
+  gtsave('yoshlar_yetakchisi.png', path = here("results", "tables", "tash_obl"))
 
 
 #table 10 ayollar faoli
 
-fergana_input_02 %>%
+tash_obl_input_02 %>%
   filter(gender == "Аёл") %>% 
   tabyl(district, q_10) %>%
   adorn_percentages() %>%
@@ -174,12 +174,12 @@ fergana_input_02 %>%
              subtitle = md("(*Аёл-қиз респондентларнинг жавоблари)*")) %>%
   cols_width(everything() ~ px(120)) %>%
   my_theme_gt() %>%
-  gtsave('ayollar_yetakchisi.png', path = here("results", "tables", "fergana"))
+  gtsave('ayollar_yetakchisi.png', path = here("results", "tables", "tash_obl"))
 
 
 #table ishsizlik
 
-fergana_input_02 %>% 
+tash_obl_input_02 %>% 
   filter(is_working != "Пенсиядаман") %>% 
   tabyl(district, is_working) %>%
   adorn_percentages() %>% 
@@ -191,17 +191,17 @@ fergana_input_02 %>%
              subtitle = md("*(Респондентларнинг жавоблари)*")) %>% 
   cols_width(everything() ~ px(190)) %>% 
   my_theme_gt() %>% 
-  gtsave('ishsizlik.png', path = here("results", "tables", "fergana"))  
+  gtsave('ishsizlik.png', path = here("results", "tables", "tash_obl"))  
 
 #gender
-fergana_input_02 %>% 
+tash_obl_input_02 %>% 
   filter(is_working != "Пенсиядаман") %>% 
   tabyl(gender, is_working) %>% 
   adorn_percentages()
 
 #formality
 
-fergana_input_02 %>% 
+tash_obl_input_02 %>% 
   filter(is_working == "Ҳа") %>% 
   tabyl(district, is_official) %>%
   adorn_percentages() %>% 
@@ -212,11 +212,11 @@ fergana_input_02 %>%
   tab_header(title = md("**Туманлар (шаҳарлар) кесимида расмий меҳнат фаолияти билан банд бўлганлар ҳолати**")) %>% 
   cols_width(everything() ~ px(200)) %>%
   my_theme_gt() %>% 
-  gtsave('formality.png', path = here("results", "tables", "fergana"))    
+  gtsave('formality.png', path = here("results", "tables", "tash_obl"))    
 
 
 #income groups
-fergana_input_02 %>% filter(income != "Жавоб беришдан бош тортди") %>% 
+tash_obl_input_02 %>% filter(income != "Жавоб беришдан бош тортди") %>% 
   mutate(income = str_replace_all(income, " ", "")) %>%  
   mutate(income = as.double(income)) %>% 
   mutate(income_group = case_when(income == 0 ~ "Даромади мавжуд эмас",
@@ -233,5 +233,5 @@ fergana_input_02 %>% filter(income != "Жавоб беришдан бош тор
   tab_header(title = md("**Аҳоли ойлик даромадининг тақсимланиши**")) %>% 
   cols_width(everything() ~ px(150)) %>% 
   my_theme_gt() %>% 
-  gtsave('income.png', path = here("results", "tables", "fergana"))    
+  gtsave('income.png', path = here("results", "tables", "tash_obl"))    
 
