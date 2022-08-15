@@ -1,113 +1,220 @@
----
-  title: "Untitled"
-author: "Nozimjon Ortiqov"
-date: '2022-05-07'
-output: html_document
----
-  
-  
-  ```{r}
-here()
 
-Sys.setlocale("LC_CTYPE", "russian")
-```
+#Table 1 
 
-```{r}
-kashkadaryo_input_01 <- readxl::read_xlsx(here("data", "kashkadaryo_2022_07.xlsx")) 
-```
-
-```{r}
-#creating a vector that contains the new names 
-
-new_names <-   c("phone_number", "gender", "district", "age", 
-                 "is_working", "is_official",  "q_1", "q_2", "q_3", "income", 
-                 "q_4", "q_5", "q_6", "q_7", "q_8", "q_9", "q_10","q_11" )
-
-```
-
-```{r}
-kashkadaryo_input_02 <- kashkadaryo_input_01 %>% 
-  select(-3) %>% 
-  set_names(new_names) %>% 
-  relocate(income, .before = q_1) %>% 
-  mutate_if(is.character, as_factor) %>% 
-  distinct(phone_number, .keep_all = TRUE) %>% 
-  drop_na(district)
-```
-
-```{r}
-skim(kashkadaryo_input_02)
-```
-
-```{r}
-q1_reg <- reg_table(kashkadaryo_input_02, q_1) %>% 
-  dplyr::select(district, "Ёмонлашади", "Ўзгармайди", "Яхшиланади") %>% 
+kashkadaryo_input_02 %>%
+  tabyl(district, q_1) %>%
+  adorn_percentages() %>% 
+  select(district, "Ёмонлашади", "Ўзгармайди", "Яхшиланади") %>% 
   mutate_at(vars(-district), as.double) %>% 
-  dplyr::select(district, pos="Яхшиланади", neg="Ёмонлашади") %>% 
-  mutate(b_s_q1 = pos-neg+100) %>% 
-  dplyr::select(-pos, -neg)
+  arrange(desc(across(starts_with("Ёмонлашади")))) %>% 
+  gt(rowname_col = "district") %>% 
+  tab_header(title = md("*1-савол.* **3 ойдан сўнг Ўзбекистонда <span style='color:red'>иқтисодий ҳолат</span> қандай ўзгаради?**"),
+             subtitle = md("(*Респондентларнинг жавоблари*)")) %>% 
+  my_theme_gt() %>% 
+  cols_width(everything() ~ px(180)) %>% 
+  gtsave('1_savol.png', path = here("results", "tables", "kashkadaryo"))
 
-q2_reg <- reg_table(kashkadaryo_input_02, q_2) %>% 
-  dplyr::select(district, "Пасайди", "Ўзгармади", "Ошди") %>% 
+#table 3
+kashkadaryo_input_02 %>%
+  tabyl(district, q_3) %>%
+  adorn_percentages() %>% 
+  select(district, "Қисқаради", "Ўзгармайди", "Кўпаяди") %>% 
   mutate_at(vars(-district), as.double) %>% 
-  dplyr::select(district, pos="Ошди", neg="Пасайди") %>% 
-  mutate(b_s_q2=pos-neg+100) %>% 
-  dplyr::select(-pos, -neg)
+  arrange(desc(across(starts_with("Қисқаради")))) %>% 
+  gt(rowname_col = "district") %>% 
+  tab_header(title = md("*3-савол*. **Кейинги 3 ой давомида <span style='color:red'>оилавий даромадингиз</span> қандай кутиляпти?**"),
+             subtitle = md("*(Респондентларнинг жавоблари)*")) %>% 
+  my_theme_gt() %>% 
+  cols_width(everything() ~ px(180)) %>% 
+  gtsave('3_savol.png', path = here("results", "tables", "kashkadaryo"))
 
-q3_reg <- reg_table(kashkadaryo_input_02, q_3) %>% 
-  dplyr::select(district, "Қисқаради", "Ўзгармайди", "Кўпаяди") %>%
+#table 5
+kashkadaryo_input_02 %>%
+  tabyl(district, q_5) %>%
+  adorn_percentages() %>% 
+  select(district, "Камаяди", "Ўзгармайди", "Кўпаяди") %>% 
   mutate_at(vars(-district), as.double) %>% 
-  dplyr::select(district, pos="Кўпаяди", neg="Қисқаради") %>% 
-  mutate(b_s_q3 = pos-neg+100) %>% 
-  dplyr::select(-pos, -neg)
+  arrange(desc(across(starts_with("Камаяди")))) %>% 
+  gt(rowname_col = "district") %>% 
+  tab_header(title = md("*5-савол*. **3 ойдан сўнг  <span style='color:red'>янги иш ўринлари сони</span> қандай ўзгаради?**"),
+             subtitle = md("*(Респондентларнинг жавоблари)*")) %>% 
+  my_theme_gt() %>% 
+  cols_width(everything() ~ px(180)) %>% 
+  gtsave('5_savol.png', path = here("results", "tables", "kashkadaryo"))
 
-q4_reg <- reg_table(kashkadaryo_input_02, q_4) %>% 
-  dplyr::select(district, "Камайди", "Ўзгармади", "Кўпайди") %>% 
+#table 2
+kashkadaryo_input_02 %>%
+  tabyl(district, q_2) %>%
+  adorn_percentages() %>% 
+  select(district, "Пасайди", "Ўзгармади", "Ошди") %>% 
   mutate_at(vars(-district), as.double) %>% 
-  dplyr::select(district, pos="Кўпайди", neg="Камайди") %>% 
-  mutate(b_s_q4 = pos-neg+100) %>% 
-  dplyr::select(-pos, -neg)
+  arrange(desc(across(starts_with("Пасайди")))) %>% 
+  gt(rowname_col = "district") %>% 
+  tab_header(title = md("*2-савол*. **Ўтган 3 ойга нисбатан <span style='color:red'>оилавий даромадингиз </span> қандай ўзгарди?**"),
+             subtitle = md("*(Респондентларнинг жавоблари)*")) %>% 
+  my_theme_gt() %>% 
+  cols_width(everything() ~ px(180)) %>% 
+  gtsave('2_savol.png', path = here("results", "tables", "kashkadaryo"))
 
-q5_reg <- reg_table(kashkadaryo_input_02,q_5) %>% 
-  dplyr::select(district, "Камаяди", "Ўзгармайди", "Кўпаяди") %>% 
+#table 4
+kashkadaryo_input_02 %>%
+  tabyl(district, q_4) %>%
+  adorn_percentages() %>% 
+  select(district, "Камайди", "Ўзгармади", "Кўпайди") %>% 
   mutate_at(vars(-district), as.double) %>% 
-  dplyr::select(district, pos="Кўпаяди", neg="Камаяди") %>% 
-  mutate(b_s_q5 = pos-neg+100) %>% 
-  select(-pos, -neg)
+  arrange(desc(across(starts_with("Камайди")))) %>% 
+  gt(rowname_col = "district") %>% 
+  tab_header(title = md("*4-савол*. **Ўтган 3 ойга нисбатан <span style='color:red'>янги иш ўринлари  </span> қандай ўзгарди?**"),
+             subtitle = md("*(Респондентларнинг жавоблари)*")) %>% 
+  my_theme_gt() %>% 
+  cols_width(everything() ~ px(180)) %>% 
+  gtsave('4_savol.png', path = here("results", "tables", "kashkadaryo"))
 
-q6_reg <- reg_table(kashkadaryo_input_02, q_6) %>% 
-  select(district, "Йўқ", "Билмайман", "Ҳа") %>% 
+
+#table 6
+kashkadaryo_input_02 %>%
+  tabyl(district, q_6) %>%
+  adorn_percentages() %>% 
+  select(district, "Қулай фурсат эмас" = "Йўқ", "Билмайман",   "Қулай фурсат" = "Ҳа") %>% 
   mutate_at(vars(-district), as.double) %>% 
-  select(district, pos="Ҳа", neg="Йўқ") %>% 
-  mutate(b_s_q6 = pos-neg+100) %>% 
-  select(-pos, -neg)
+  arrange(desc(across(starts_with("Қулай фурсат эмас")))) %>% 
+  gt(rowname_col = "district") %>% 
+  tab_header(title = md("*6-савол*. **Ҳозир узоқ муддатли <span style='color:red'> истеъмол товарларини харид қилиш  </span> учун қулай фурсатми?**"),
+             subtitle = md("*(Респондентларнинг жавоблари)*")) %>% 
+  my_theme_gt() %>% 
+  cols_width(everything() ~ px(180)) %>% 
+  gtsave('6_savol.png', path = here("results", "tables", "kashkadaryo"))
 
-q7 <- reg_table(kashkadaryo_input_02, q_7) %>% 
+#table 7
+
+# table_7 <- kashkadaryo_input_02 %>% add_count(district) %>% 
+#   separate_rows(q_7, sep = ",") %>%
+#   mutate(q_7 = str_trim(q_7)) %>% 
+#   count(district, n,  q_7) %>% 
+#   mutate(freq = 100*nn/n) %>% 
+#   select(-n, -nn) %>% 
+#   pivot_wider(names_from = q_7, values_from = freq) 
+# 
+# write_xlsx(table_7, "muammolar_kashkadaryo.xlsx")
+
+#table 8
+
+#table 11 mahalliy organlarni baholash 
+
+kashkadaryo_input_02 %>%
+  tabyl(district, q_11) %>%
+  adorn_percentages() %>% 
+  select(district, "Жуда ёмон", "Ёмон", "Ўртача", "Яхши", "Жуда яхши") %>% 
   mutate_at(vars(-district), as.double) %>% 
-  mutate_if(is.numeric, round, digits =0)
-```
+  arrange(desc(across(starts_with("Жуда ёмон")))) %>% 
+  gt(rowname_col = "district") %>% 
+  tab_header(title = md("**Маҳаллий ҳокимият органи фаолиятини қандай баҳолайсиз?**"),
+             subtitle = md("(*Респондентларнинг жавоблари)*")) %>% 
+  cols_width(everything() ~ px(120)) %>% 
+  my_theme_gt() %>% 
+  gtsave('mahalliy_organ.png', path = here("results", "tables", "kashkadaryo"))
 
-```{r}
-reg_cur <- q2_reg %>% left_join(q4_reg) %>% left_join(., q6_reg) %>% 
-  mutate(bs_score_cur = (b_s_q2+b_s_q4 + b_s_q6)/3) 
 
-reg_fut <- q1_reg %>% left_join(q3_reg) %>% left_join(., q5_reg) %>% 
-  mutate(bs_score_fut = (b_s_q1+b_s_q3 + b_s_q5)/3) 
+#table 8 hokim yordamchisi
 
-bs_score_reg <-  reg_cur %>%  left_join(reg_fut) %>%  
-  mutate(bs_gen = (bs_score_cur + bs_score_fut)/2)  %>% 
-  select(district, bs_gen, everything()) %>%  
-  mutate_if(is.numeric, round, digits =0) 
-```
+kashkadaryo_input_02 %>%
+  tabyl(district, q_8) %>%
+  adorn_percentages() %>%
+  select(district, "Танимайман",  
+         "Ҳеч қандай ёрдам бергани йўқ", 
+         "Имтиёзли кредит олишда кўмаклашди", 
+         "Ишга жойлаштиришга ёрдам берди",
+         "Субсидия, грант ва моддий ёрдам тақдим этилди",
+         "Малака оширишга кўмаклашди",
+         "Ер ажратишда ёрдам берди"
+  ) %>%
+  mutate_at(vars(-district), as.double) %>%
+  #arrange(desc(across(starts_with("Жуда ёмон")))) %>%
+  gt(rowname_col = "district") %>%
+  tab_header(title = md("**Ҳоким ёрдамчиси томонидан кўрсатилган ёрдам ҳолати**"),
+             subtitle = md("(*Респондентларнинг жавоблари)*")) %>%
+  cols_width(everything() ~ px(120)) %>%
+  my_theme_gt() %>%
+  gtsave('hokim_yordamchisi.png', path = here("results", "tables", "kashkadaryo"))
 
-```{r}
-list_of_dataframes <- list("index" = bs_score_reg,  "problems_district" = q7)  
+#table 9 yoshlar yetakchisi faoli
 
-wb <- createWorkbook()
-lapply(seq_along(list_of_dataframes), function(i){
-  addWorksheet(wb=wb, sheetName = names(list_of_dataframes[i]))
-  writeData(wb, sheet = i, list_of_dataframes[[i]])
-})
-#Save Workbook
-saveWorkbook(wb, "kashkadaryo_indeks_2022_07.xlsx", overwrite = TRUE) 
-```
+kashkadaryo_input_02 %>%
+  filter(age <= "30") %>% 
+  tabyl(district, q_9) %>%
+  adorn_percentages() %>%
+  select(district, "Танимайман",  
+         "Ёрдам олганман",
+         "Фаолиятидан хабардорман, лекин ёрдам олмаганман", 
+         "Танийман, лекин ёрдамга зарурият йўқ") %>%
+  mutate_at(vars(-district), as.double) %>%
+  #arrange(desc(across(starts_with("Жуда ёмон")))) %>%
+  gt(rowname_col = "district") %>%
+  tab_header(title = md("**Ёшлар етакчиси фаолияти билан танишмисиз?**"),
+             subtitle = md("(*Респондентларнинг жавоблари)*")) %>%
+  cols_width(everything() ~ px(120)) %>%
+  my_theme_gt() %>%
+  gtsave('yoshlar_yetakchisi.png', path = here("results", "tables", "kashkadaryo"))
+
+
+#table 10 ayollar faoli
+
+kashkadaryo_input_02 %>%
+  filter(gender == "Аёл") %>% 
+  tabyl(district, q_10) %>%
+  adorn_percentages() %>%
+  select(district, "Танимайман",  
+         "Ёрдам олганман",
+         "Фаолиятидан хабардорман, лекин ёрдам олмаганман", 
+         "Танийман, лекин ёрдамга зарурият йўқ") %>%
+  mutate_at(vars(-district), as.double) %>%
+  #arrange(desc(across(starts_with("Жуда ёмон")))) %>%
+  gt(rowname_col = "district") %>%
+  tab_header(title = md("**Хотин-қизлар фаоли билан танишмисиз?**"),
+             subtitle = md("(*Аёл-қиз респондентларнинг жавоблари)*")) %>%
+  cols_width(everything() ~ px(120)) %>%
+  my_theme_gt() %>%
+  gtsave('ayollar_yetakchisi.png', path = here("results", "tables", "kashkadaryo"))
+
+
+#table ishsizlik
+
+kashkadaryo_input_02 %>% 
+  filter(is_working != "Пенсиядаман") %>% 
+  tabyl(district, is_working) %>%
+  adorn_percentages() %>% 
+  select(district, "Ишламайди"="Йўқ", "Ишлайди"="Ҳа") %>% 
+  mutate_at(vars(-district), as.double) %>% 
+  arrange(desc(across(starts_with("Ишламайди")))) %>% 
+  gt(rowname_col = "district") %>% 
+  tab_header(title = md("**Туманлар (шаҳарлар) кесимида меҳнат ресурсларнинг <span style='color:red'>иш билан бандлик</span>  ҳолати**"),
+             subtitle = md("*(Респондентларнинг жавоблари)*")) %>% 
+  cols_width(everything() ~ px(190)) %>% 
+  my_theme_gt() %>% 
+  gtsave('ishsizlik.png', path = here("results", "tables", "kashkadaryo"))  
+
+#gender
+kashkadaryo_input_02 %>% 
+  filter(is_working != "Пенсиядаман") %>% 
+  tabyl(gender, is_working) %>% 
+  adorn_percentages()
+
+#formality
+
+kashkadaryo_input_02 %>% 
+  filter(is_working == "Ҳа") %>% 
+  tabyl(district, is_official) %>%
+  adorn_percentages() %>% 
+  select(district, "Расмийлаштирилмаган" = "Йуқ", "Расмийлаштирилган" = "Ҳа") %>% 
+  mutate_at(vars(-district), as.double) %>% 
+  arrange(desc(across(starts_with("Расмийлаштирилмаган")))) %>% 
+  gt(rowname_col = "district") %>% 
+  tab_header(title = md("**Туманлар (шаҳарлар) кесимида расмий меҳнат фаолияти билан банд бўлганлар ҳолати**")) %>% 
+  cols_width(everything() ~ px(200)) %>%
+  my_theme_gt() %>% 
+  gtsave('formality.png', path = here("results", "tables", "kashkadaryo"))    
+
+
+#income groups
+                                                                                                          
+
