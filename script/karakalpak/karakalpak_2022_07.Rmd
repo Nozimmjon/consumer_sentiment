@@ -8,7 +8,6 @@ output: html_document
 
 ```{r}
 here()
-
 Sys.setlocale("LC_CTYPE", "russian")
 ```
 
