@@ -1,7 +1,7 @@
 
 #Table 1 
 
-Karakalpak_input_02 %>%
+karakalpak_input_02 %>%
   tabyl(district, q_1) %>%
   adorn_percentages() %>% 
   select(district, "Ёмонлашади", "Ўзгармайди", "Яхшиланади") %>% 
@@ -15,7 +15,7 @@ Karakalpak_input_02 %>%
   gtsave('1_savol.png', path = here("results", "tables", "Karakalpak"))
 
 #table 3
-Karakalpak_input_02 %>%
+karakalpak_input_02 %>%
   tabyl(district, q_3) %>%
   adorn_percentages() %>% 
   select(district, "Қисқаради", "Ўзгармайди", "Кўпаяди") %>% 
@@ -29,7 +29,7 @@ Karakalpak_input_02 %>%
   gtsave('3_savol.png', path = here("results", "tables", "Karakalpak"))
 
 #table 5
-Karakalpak_input_02 %>%
+karakalpakk_input_02 %>%
   tabyl(district, q_5) %>%
   adorn_percentages() %>% 
   select(district, "Камаяди", "Ўзгармайди", "Кўпаяди") %>% 
@@ -43,7 +43,7 @@ Karakalpak_input_02 %>%
   gtsave('5_savol.png', path = here("results", "tables", "Karakalpak"))
 
 #table 2
-Karakalpak_input_02 %>%
+karakalpak_input_02 %>%
   tabyl(district, q_2) %>%
   adorn_percentages() %>% 
   select(district, "Пасайди", "Ўзгармади", "Ошди") %>% 
@@ -57,7 +57,7 @@ Karakalpak_input_02 %>%
   gtsave('2_savol.png', path = here("results", "tables", "Karakalpak"))
 
 #table 4
-Karakalpak_input_02 %>%
+karakalpak_input_02 %>%
   tabyl(district, q_4) %>%
   adorn_percentages() %>% 
   select(district, "Камайди", "Ўзгармади", "Кўпайди") %>% 
@@ -72,7 +72,7 @@ Karakalpak_input_02 %>%
 
 
 #table 6
-Karakalpak_input_02 %>%
+karakalpak_input_02 %>%
   tabyl(district, q_6) %>%
   adorn_percentages() %>% 
   select(district, "Қулай фурсат эмас" = "Йўқ", "Билмайман",   "Қулай фурсат" = "Ҳа") %>% 
@@ -101,7 +101,7 @@ Karakalpak_input_02 %>%
 
 #table 11 mahalliy organlarni baholash 
 
-Karakalpak_input_02 %>%
+karakalpak_input_02 %>%
   tabyl(district, q_11) %>%
   adorn_percentages() %>% 
   select(district, "Жуда ёмон", "Ёмон", "Ўртача", "Яхши", "Жуда яхши") %>% 
@@ -117,7 +117,7 @@ Karakalpak_input_02 %>%
 
 #table 8 hokim yordamchisi
 
-Karakalpak_input_02 %>%
+karakalpak_input_02 %>%
   tabyl(district, q_8) %>%
   adorn_percentages() %>%
   select(district, "Танимайман",  
@@ -138,7 +138,7 @@ Karakalpak_input_02 %>%
 
 #table 9 yoshlar yetakchisi faoli
 
-Karakalpak_input_02 %>%
+karakalpak_input_02 %>%
   filter(age <= "30") %>% 
   tabyl(district, q_9) %>%
   adorn_percentages() %>%
@@ -158,7 +158,7 @@ Karakalpak_input_02 %>%
 
 #table 10 ayollar faoli
 
-Karakalpak_input_02 %>%
+karakalpak_input_02 %>%
   filter(gender == "Аёл") %>% 
   tabyl(district, q_10) %>%
   adorn_percentages() %>%
@@ -177,7 +177,7 @@ Karakalpak_input_02 %>%
 
 #table ishsizlik
 
-Karakalpak_input_02 %>% 
+karakalpak_input_02 %>% 
   filter(is_working != "Пенсиядаман") %>% 
   tabyl(district, is_working) %>%
   adorn_percentages() %>% 
@@ -199,7 +199,7 @@ Karakalpak_input_02 %>%
 
 #formality
 
-Karakalpak_input_02 %>% 
+karakalpak_input_02 %>% 
   filter(is_working == "Ҳа") %>% 
   tabyl(district, is_official) %>%
   adorn_percentages() %>% 
@@ -214,7 +214,7 @@ Karakalpak_input_02 %>%
 
 
 #income groups
-Karakalpak_input_02 %>% filter(income != "Жавоб беришдан бош тортди") %>% 
+karakalpak_input_02 %>% filter(income != "Жавоб беришдан бош тортди") %>% 
   mutate(income = str_replace_all(income, " ", "")) %>%  
   mutate(income = as.double(income)) %>% 
   mutate(income_group = case_when(income == 0 ~ "Даромади мавжуд эмас",
@@ -232,4 +232,3 @@ Karakalpak_input_02 %>% filter(income != "Жавоб беришдан бош т�
   cols_width(everything() ~ px(150)) %>% 
   my_theme_gt() %>% 
   gtsave('income.png', path = here("results", "tables", "Karakalpak"))     
-

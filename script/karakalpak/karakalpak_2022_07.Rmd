@@ -13,7 +13,7 @@ Sys.setlocale("LC_CTYPE", "russian")
 ```
 
 ```{r}
-Xorazm_input_01 <- readxl::read_xlsx(here("data", "Xorazm_2022_07.xlsx")) 
+karakalpak_input_01 <- readxl::read_xlsx(here("data", "karakalpak_2022_07.xlsx")) 
 ```
 
 ```{r}
@@ -26,7 +26,7 @@ new_names <-   c("phone_number", "gender", "district", "age",
 ```
 
 ```{r}
-Xorazm_input_02 <- Xorazm_input_01 %>% 
+karakalpak_input_02 <- karakalpak_input_01 %>% 
   select(-3) %>% 
   set_names(new_names) %>% 
   relocate(income, .before = q_1) %>% 
@@ -36,53 +36,53 @@ Xorazm_input_02 <- Xorazm_input_01 %>%
 ```
 
 ```{r}
-skim(Xorazm_input_02)
+skim(karakalpak_input_02)
 ```
 
 ```{r}
-q1_reg <- reg_table(Xorazm_input_02, q_1) %>% 
+q1_reg <- reg_table(karakalpak_input_02, q_1) %>% 
   dplyr::select(district, "Ёмонлашади", "Ўзгармайди", "Яхшиланади") %>% 
   mutate_at(vars(-district), as.double) %>% 
   dplyr::select(district, pos="Яхшиланади", neg="Ёмонлашади") %>% 
   mutate(b_s_q1 = pos-neg+100) %>% 
   dplyr::select(-pos, -neg)
 
-q2_reg <- reg_table(Xorazm_input_02, q_2) %>% 
+q2_reg <- reg_table(karakalpak_input_02, q_2) %>% 
   dplyr::select(district, "Пасайди", "Ўзгармади", "Ошди") %>% 
   mutate_at(vars(-district), as.double) %>% 
   dplyr::select(district, pos="Ошди", neg="Пасайди") %>% 
   mutate(b_s_q2=pos-neg+100) %>% 
   dplyr::select(-pos, -neg)
 
-q3_reg <- reg_table(Xorazm_input_02, q_3) %>% 
+q3_reg <- reg_table(karakalpak_input_02, q_3) %>% 
   dplyr::select(district, "Қисқаради", "Ўзгармайди", "Кўпаяди") %>%
   mutate_at(vars(-district), as.double) %>% 
   dplyr::select(district, pos="Кўпаяди", neg="Қисқаради") %>% 
   mutate(b_s_q3 = pos-neg+100) %>% 
   dplyr::select(-pos, -neg)
 
-q4_reg <- reg_table(Xorazm_input_02, q_4) %>% 
+q4_reg <- reg_table(karakalpak_input_02, q_4) %>% 
   dplyr::select(district, "Камайди", "Ўзгармади", "Кўпайди") %>% 
   mutate_at(vars(-district), as.double) %>% 
   dplyr::select(district, pos="Кўпайди", neg="Камайди") %>% 
   mutate(b_s_q4 = pos-neg+100) %>% 
   dplyr::select(-pos, -neg)
 
-q5_reg <- reg_table(Xorazm_input_02,q_5) %>% 
+q5_reg <- reg_table(karakalpak_input_02,q_5) %>% 
   dplyr::select(district, "Камаяди", "Ўзгармайди", "Кўпаяди") %>% 
   mutate_at(vars(-district), as.double) %>% 
   dplyr::select(district, pos="Кўпаяди", neg="Камаяди") %>% 
   mutate(b_s_q5 = pos-neg+100) %>% 
   select(-pos, -neg)
 
-q6_reg <- reg_table(Xorazm_input_02, q_6) %>% 
+q6_reg <- reg_table(karakalpak_input_02, q_6) %>% 
   select(district, "Йўқ", "Билмайман", "Ҳа") %>% 
   mutate_at(vars(-district), as.double) %>% 
   select(district, pos="Ҳа", neg="Йўқ") %>% 
   mutate(b_s_q6 = pos-neg+100) %>% 
   select(-pos, -neg)
 
-q7 <- reg_table(Xorazm_input_02, q_7) %>% 
+q7 <- reg_table(karakalpak_input_02, q_7) %>% 
   mutate_at(vars(-district), as.double) %>% 
   mutate_if(is.numeric, round, digits =0)
 ```
@@ -109,5 +109,5 @@ lapply(seq_along(list_of_dataframes), function(i){
   writeData(wb, sheet = i, list_of_dataframes[[i]])
 })
 #Save Workbook
-saveWorkbook(wb, "Xorazm_indeks_2022_07.xlsx", overwrite = TRUE) 
+saveWorkbook(wb, "karakalpak_indeks_2022_07.xlsx", overwrite = TRUE) 
 ```
