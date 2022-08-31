@@ -29,7 +29,7 @@ karakalpak_input_02 %>%
   gtsave('3_savol.png', path = here("results", "tables", "Karakalpak"))
 
 #table 5
-karakalpakk_input_02 %>%
+karakalpak_input_02 %>%
   tabyl(district, q_5) %>%
   adorn_percentages() %>% 
   select(district, "Камаяди", "Ўзгармайди", "Кўпаяди") %>% 
@@ -192,7 +192,7 @@ karakalpak_input_02 %>%
   gtsave('ishsizlik.png', path = here("results", "tables", "Karakalpak"))  
 
 #gender
-Karakalpak_input_02 %>% 
+karakalpak_input_02 %>% 
   filter(is_working != "Пенсиядаман") %>% 
   tabyl(gender, is_working) %>% 
   adorn_percentages()
